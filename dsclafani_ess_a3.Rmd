@@ -1,0 +1,87 @@
+---
+title: "ess_a3"
+author: "Danielle Sclafani"
+date: "11/22/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(lubridate)
+```
+
+## attaching the csv
+
+```{r}
+in_out_data <- read_csv(here("inflow_outflow.csv"))
+```
+
+## graphing inflow and outflow
+
+
+```{r}
+ggplot(data = in_out_data, aes(x=year, y =inflow)) + geom_point()+
+  geom_point(aes(x= year, y = outflow)) +
+  labs(x = "Year", y = "Volume of inflow and outflow (10^9 m^3)",
+       title = "Inflow and Outflow")
+```
+
+```{r, fig.cap= "Figure 1.0 shows the change in input and output of groundwater from 2000 to 2050. The blue line shows the inputs of groundwater, and the red lines is reflective of the outputs of groundwater"}
+inflow <- in_out_data %>% 
+  filter(year %in% c("2000","2050")) %>%
+  select(inflow, year)
+  
+outflow <- in_out_data %>% 
+  filter(year %in% c("2000", "2050")) %>%
+  select(outflow, year)
+
+ggplot(data = inflow, aes(x= year, y = inflow )) + geom_line(color = "cyan4")+
+  geom_point(color = "cyan4")+
+  geom_line(data = outflow, aes(x=year, y = outflow), color = "red")+
+  geom_point(data=outflow, aes(x=year, y = outflow), color = "red")+
+  labs(x = "Year", y = "Volume of flow (10^9 m^3)",
+       title = "Inputs and Outputs of Groundwater from 2000 to 2050")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+### Showing the three scenarios of groundwater loss from three different starting points
+
+```{r}
+ggplot(data = in_out_data, aes(x = year, y = start_350)) + geom_col(fill="blue", alpha = 0.5)+
+  geom_col(data = in_out_data, aes(x=year, y = start_190), fill = "red",
+           alpha = 0.5)+
+  geom_col(data = in_out_data, aes(x=year, y = start_550), fill = "green",
+           alpha = 0.5)
+```
+
+```{r}
+
+one <- ggplot(data = in_out_data, aes(x = year, y = start_350)) + geom_col(fill="blue")
+two <- ggplot(data = in_out_data, aes(x = year, y = start_190)) + geom_col(fill="red")
+three <- ggplot(data = in_out_data, aes(x = year, y = start_550)) + geom_col(fill="green")
+
+```
+
+par(mfrow = c(3,1))
+ggplot(data = in_out_data, aes(x = year, y = start_350)) + geom_col(fill="blue")
+ggplot(data = in_out_data, aes(x = year, y = start_190)) + geom_col(fill="red")
+ggplot(data = in_out_data, aes(x = year, y = start_550)) + geom_col(fill="green")
+
+
+```{r}
+ggplot(data = in_out_data, aes(x = year, y = start_550)) + geom_col(fill="green")
+  
+```
+```{r}
+ggplot(data = in_out_data, aes(x = year, y = start_350)) + geom_col(fill="blue")
+
+```
+
+```{r}
+ggplot(data = in_out_data, aes(x = year, y = start_190)) + geom_col(fill="red")
+
+```
+
