@@ -71,17 +71,46 @@ ggplot(data = in_out_data, aes(x = year, y = start_190)) + geom_col(fill="red")
 ggplot(data = in_out_data, aes(x = year, y = start_550)) + geom_col(fill="green")
 
 
-```{r}
-ggplot(data = in_out_data, aes(x = year, y = start_550)) + geom_col(fill="green")
+```{r, fig.cap= "Figure 1.0: Volume of Available Groundwater in California from 2000-2050. This scenario assumes that the volume of available groundwater at the beginning of 2000 was 550x10^8 m^3"}
+
+ggplot(data = in_out_data, aes(x = year, y = start_550)) + geom_col(fill="purple", alpha = 0.5)+
+  labs(x = "", y = "",
+       title = "Volume in 2000 of 550x10^9 m^3")+
+  theme_bw() +
+  theme(plot.title = element_text(hjust=0.5))
   
 ```
-```{r}
-ggplot(data = in_out_data, aes(x = year, y = start_350)) + geom_col(fill="blue")
+```{r, fig.cap= "Figure 1.0: Volume of available groundwater in California from 2000-2050. The volume of available ground water at the beginning of 2000 is 350x10^9 m^3, as predicted by the Curmin study."}
+ggplot(data = in_out_data, aes(x = year, y = start_350)) + geom_col(fill="blue", alpha = 0.5)+
+  labs(x = "", y = "Volume of Groundwater (10^9 m^3)",
+       title = "Volume in 2000 of 350x10^9 m^3")+
+  theme_bw() +
+  theme(plot.title = element_text(hjust=0.5))
 
 ```
 
 ```{r}
-ggplot(data = in_out_data, aes(x = year, y = start_190)) + geom_col(fill="red")
+ggplot(data = in_out_data, aes(x = year, y = start_190)) + geom_col(fill="red", alpha = 0.5)+
+  labs(x = "Year", y = "",
+       title = "Volume in 2000 of 190x10^9 m^3")+
+  theme_bw() +
+  theme(plot.title = element_text(hjust=0.5))
 
 ```
+
+```{r}
+outflow_slope <- read_csv("outflow slope 0.173.csv")
+
+as.date(outflow_slope$year)
+
+
+class(outflow_slope$year)
+
+start_350 <- outflow_slope %>% 
+  select(year_new, "starting with 350")
+```
+```{r}
+ggplot(data=start_350, aes(x=year_new, y ="starting with 350")) + geom_col()
+```
+
 
